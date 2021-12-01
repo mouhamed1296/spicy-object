@@ -1,0 +1,26 @@
+{
+  "name": "spicy-object",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib",
+  
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "keywords": [
+    "form",
+    "input",
+    "handleform",
+    "formlib"
+  ],
+  "author": "Mamadou Sarr",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mouhamed1296/sard-form.git"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.2"
+  }
+}
