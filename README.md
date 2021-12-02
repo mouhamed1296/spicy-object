@@ -26,7 +26,7 @@ ___
     + [➤ freeze](#-freeze)
     + [➤ extract](#-extract)
     + [➤ includes](#-includes)
-  * [Contributing ❤](#contributing--)
+  * [Contributing ❤](#contributing-)
   * [Issue Reporting](#issue-reporting)
   * [Author](#author)
   * [License](#license)
