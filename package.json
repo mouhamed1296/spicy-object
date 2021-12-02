@@ -8,10 +8,10 @@
     "build": "tsc -p ."
   },
   "keywords": [
-    "form",
-    "input",
-    "handleform",
-    "formlib"
+    "object",
+    "maniplate object",
+    "objact map",
+    "freeze"
   ],
   "author": "Mamadou Sarr",
   "license": "MIT",
