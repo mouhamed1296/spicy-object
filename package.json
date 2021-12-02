@@ -1,5 +1,5 @@
 {
-  "name": "spicy-object",
+  "name": "spicy_object",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -8,10 +8,10 @@
     "build": "tsc -p ."
   },
   "keywords": [
-    "form",
-    "input",
-    "handleform",
-    "formlib"
+    "object",
+    "maniplate object",
+    "objact map",
+    "freeze"
   ],
   "author": "Mamadou Sarr",
   "license": "MIT",
