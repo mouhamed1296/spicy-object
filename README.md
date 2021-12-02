@@ -5,12 +5,12 @@
 ***
 ___
 ## Table Of Contents 📑
-- [🟢 Spicy Object](#-spicy-object)
+- [🟢 Spicy Object](#spicy-object)
   * [Table Of Contents 📑](#table-of-contents---)
-  * [💨 Description](#-description)
-  * [📥 Installation](#-installation)
-  * [🤔 Usage](#-usage)
-  * [✨ Methods](#-methods)
+  * [💨 Description](#description)
+  * [📥 Installation](#installation)
+  * [🤔 Usage](#usage)
+  * [✨ Methods](#methods)
     + [➤ size](#-size)
     + [➤ isEmpty](#-isEmpty)
     + [➤ ToMap](#-toMap)
