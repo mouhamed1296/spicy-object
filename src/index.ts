@@ -2,6 +2,7 @@ export const _Object = (_obj: Object): SpicyObject => {
     let obj: myObject = _obj
     return {
         ...obj,
+        size: Object.keys(obj).length + Object.getOwnPropertySymbols(obj).length,
         isEmpty: ():boolean => (obj && Object.keys(obj).length === 0),
         toMap: ():Map<string,any> => {
             return new Map(Object.entries(obj))
@@ -25,7 +26,7 @@ export const _Object = (_obj: Object): SpicyObject => {
             }
             return holder
         },
-        getEntries: (startIndex: number, stopIndex: number): Object => {
+        slice: (startIndex: number, stopIndex: number): Object => {
             return Object.fromEntries(
                 Object.keys(obj).filter(
                     (entrie, index) => (entrie && index >= startIndex && index <= stopIndex)
@@ -132,6 +133,7 @@ interface myObject extends Object {
 }
 
 type SpicyObject = object & {
+    size: number
     isEmpty: Function,
     toMap: Function,
     getFirstEntry: Function,
@@ -139,7 +141,7 @@ type SpicyObject = object & {
     getEntryByIndex: Function,
     getEntryByKey: Function,
     getEntryByPath: Function,
-    getEntries: Function,
+    slice: Function,
     filter: Function,
     map: Function,
     forEach: Function,
