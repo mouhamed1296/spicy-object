@@ -35,25 +35,25 @@ ___
 
 ## Description
 
-**Spicy-Object** is a TS/JS [NPM](http://npmjs.com/) Package to enhance javascript Object capabilities by adding a bunch of methods that help manipulate them easily.
+**Spicy_Object** is a TS/JS [NPM](http://npmjs.com/) Package to enhance javascript Object capabilities by adding a bunch of methods that help manipulate them easily.
 
 ## Installation
 
 To use this library you need to install it using :
 ```
-npm install spicy-object --save
+npm install spicy_object --save
 //or
-npm i spicy-object --save
+npm i spicy_object --save
 ```
 or:
 ```
-yarn add spicy-object
+yarn add spicy_object
 ```
 
 ## Usage
 After installation you need to import the library using :
 ```js
-import { _Object } from "spicy-object"
+import { _Object } from "spicy_object"
 ```
 A basic usage would be to test if an object is empty
 ```js
