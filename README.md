@@ -1,6 +1,6 @@
 # spicy_object :heart: :boom: :rocket:
-[![mouhamed1296 - spicy-object](https://img.shields.io/static/v1?label=mouhamed1296&message=spicy-object&color=blue&logo=github)](https://github.com/mouhamed1296/spicy-object "Go to GitHub repo")
-[![stars - spicy-object](https://img.shields.io/github/stars/mouhamed1296/spicy-object?style=social)](https://github.com/mouhamed1296/spicy-object)
+[![mouhamed1296 - spicy_object](https://img.shields.io/static/v1?label=mouhamed1296&message=spicy-object&color=blue&logo=github)](https://github.com/mouhamed1296/spicy-object "Go to GitHub repo")
+[![stars - spicy_object](https://img.shields.io/github/stars/mouhamed1296/spicy-object?style=social)](https://github.com/mouhamed1296/spicy-object)
 
 ***
 ___
