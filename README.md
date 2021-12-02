@@ -1,11 +1,11 @@
-# spicy-object :heart: :boom: :rocket:
+# spicy_object :heart: :boom: :rocket:
 [![mouhamed1296 - spicy-object](https://img.shields.io/static/v1?label=mouhamed1296&message=spicy-object&color=blue&logo=github)](https://github.com/mouhamed1296/spicy-object "Go to GitHub repo")
 [![stars - spicy-object](https://img.shields.io/github/stars/mouhamed1296/spicy-object?style=social)](https://github.com/mouhamed1296/spicy-object)
 
 ***
 ___
 ## Table Of Contents 📑
-- [🟢 Spicy Object](#spicy-object)
+- [🟢 Spicy Object](#spicy_object)
   * [Table Of Contents 📑](#table-of-contents---)
   * [💨 Description](#description)
   * [📥 Installation](#installation)
