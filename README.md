@@ -1,4 +1,5 @@
 # spicy_object :heart: :boom: :rocket:
+A JS/TS Library that allow developers to easily manipulate javascript object by providing a bunch of useful method that will make working with object as simple as working with arrays.
 [![mouhamed1296 - spicy_object](https://img.shields.io/static/v1?label=mouhamed1296&message=spicy-object&color=blue&logo=github)](https://github.com/mouhamed1296/spicy-object "Go to GitHub repo")
 [![stars - spicy_object](https://img.shields.io/github/stars/mouhamed1296/spicy-object?style=social)](https://github.com/mouhamed1296/spicy-object)
 
