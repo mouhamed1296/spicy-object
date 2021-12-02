@@ -344,7 +344,7 @@ by using the path that leads to this key
 let result = users[0].interest.food[1].usa[2][0].jfr
 
 //using this library
-let result = _Object(users).getEntryByKey("0.interest.food.1.usa.2.0.jfr")
+let result = _Object(users).getEntryByPath("0.interest.food.1.usa.2.0.jfr")
 
 //expected output for both method
 [ "jfr_sn", "jfr_ng" ]
