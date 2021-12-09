@@ -27,6 +27,7 @@ ___
     + [➤ freeze](#-freeze)
     + [➤ extract](#-extract)
     + [➤ includes](#-includes)
+    + [➤ makeNullSafe](#-makeNullSafe)
   * [Contributing ❤](#contributing-)
   * [Issue Reporting](#issue-reporting)
   * [Author](#author)
@@ -326,7 +327,9 @@ let result = _Object(users).getEntryByKey("jfr")
 ```
 
 ### ➤ getEntryByPath
-This method allow you to get the value of an deeply nested entry inside an object by only passing the path that lead to this entry as parameter.
+This method allow you to get the value of an deeply nested 
+
+entry inside an object by only passing the path that lead to this entry as parameter.
 
 
 **<span style="color: orange"> Syntax : </span>**
@@ -376,7 +379,9 @@ console.log(slice)
 ```
 
 ### ➤ filter
-This method allow you to filter an object by passing a filter function that returns a boolean. It works just like the filter method of arrays.
+This method allow you to filter an object by passing a filter function that returns a boolean. 
+
+It works just like the filter method of arrays.
 
 It returns the filtered Object
 
@@ -398,10 +403,10 @@ console.log(filtered)
 //More advanced filter
 
 const products = {
-    { name: 'Orbit', color: 'Blue', size: 50, locations: ['USA', 'Europe'], details: { length: 20, width: 70 } },
-    { name: 'Galsen', color: 'Blue', size: 60, locations: [], details: { length: 20, width: 70 } },
-    { name: 'DaoudaBa', color: 'Black', size: 70, locations: ['Japan'], details: { length: 20, width: 71 } },
-    { name: 'Mouhamed', color: 'Green', size: 50, locations: ['USA'], details: { length: 20, width: 71 } }
+    0: { name: 'Orbit', color: 'Blue', size: 50, locations: ['USA', 'Europe'], details: { length:    20, width: 70 } },
+    1: { name: 'Galsen', color: 'Blue', size: 60, locations: [], details: { length: 20, width: 70 } },
+    2: { name: 'DaoudaBa', color: 'Black', size: 70, locations: ['Japan'], details: { length: 20, width: 71 } },
+    3: { name: 'Mouhamed', color: 'Green', size: 50, locations: ['USA'], details: { length: 20, width: 71 } }
 };
 
 console.log(
@@ -417,19 +422,21 @@ console.log(
 
 //expected output
 {
-    { name: 'Orbit', color: 'Blue', size: 50, locations: ['USA', 'Europe'], details: { length: 20, width: 70 },
-    { name: 'DaoudaBa', color: 'Black', size: 70, locations: ['Japan'], details: { length: 20, width: 71 } }
+    0: { name: 'Orbit', color: 'Blue', size: 50, locations: ['USA', 'Europe'], details: { length: 20, width: 70 },
+    1: { name: 'DaoudaBa', color: 'Black', size: 70, locations: ['Japan'], details: { length: 20, width: 71 } }
 }
 ```
 ### ➤ map
 This method allow you to map through an object
 
-**Note**: Inside the map you wouldn't try to modify the initial object.If you want to do that use the next method.
+**Note**: Inside the map you wouldn't try to modify the initial object.
+
+If you want to do that use the next method.
 
 **<span style="color: orange"> Syntax : </span>**
 
 ```js
-_Object(yourObject).map(value, key?optional, index?optional => {/*body*/})
+_Object(yourObject).map((value, key?optional, index?optional) => {/*body*/})
 ```
 **<span style="color: green"> use case : </span>**
 
@@ -448,7 +455,7 @@ This method allow you to Loop through an Object and have access to his keys, val
 **<span style="color: orange"> Syntax : </span>**
 
 ```js
-_Object(yourObject).forEach(value, key?optional, index?optional => {/*body*/})
+_Object(yourObject).forEach((value, key?optional, index?optional) => {/*body*/})
 ```
 **<span style="color: green"> use case : </span>**
 
@@ -488,7 +495,11 @@ _Object(userInfo).freeze(2)
 //after that the object become immutable
 ```
 ### ➤ extract
-This method allow you to extract some properties of an object and group them to create another object regardless of the level of depth of those properties inside the object until you give a valid path to them.
+This method allow you to extract some properties of an object and group them to create another 
+
+object regardless of the level of depth of those properties inside the object until you give a 
+
+valid path to them.
 
 It takes an unlimited number of parameters
 
@@ -517,15 +528,15 @@ const newObj = _Object(users).map(
 
 //This reduce our huge user object to this
 {
-    0: Object { 
+    0: { 
         name: "John",
         "interest.music": [ "rnb", "rap" ] 
     }
-    1: Object { 
+    1: { 
         name: "Jane",
         "interest.music": [ "rnb", "rap" ] 
     }
-    2: Object {
+    2: {
         name: "Moussa",
         "interest.music": [ "rnb", "rap", "trap" ]
     }
@@ -539,15 +550,15 @@ const newObj = _Object(users).map(
 
 //This reduce our huge user object to this
 {
-    0: Object { 
+    0: { 
         name: "John",
         music: [ "rnb", "rap" ] 
     }
-    1: Object { 
+    1: { 
         name: "Jane",
         music: [ "rnb", "rap" ] 
     }
-    2: Object {
+    2: {
         name: "Moussa",
         music: [ "rnb", "rap", "trap" ]
     }
@@ -555,14 +566,18 @@ const newObj = _Object(users).map(
 
 ```
 ### ➤ includes
-This object allow you to test if an object contain a certain key even if the key is deeply nested inside the object
+This method allow you to test if an object contain a certain key even if the key is deeply nested 
 
-It returns an array where the first element is true or false, the second element is the path to the key or an empty string, depending on whether or not the key was found inside the object
+inside the object
+
+It returns an array where the first element is true or false, the second element is the path to the 
+
+key or an empty string, depending on whether or not the key was found inside the object
 
 **<span style="color: orange"> Syntax : </span>**
 
 ```js
-//a param have to be a key or a path to a key
+//a param have to be a key
 _Object(yourObject).includes(key)
 ```
 **<span style="color: green"> use case : </span>**
@@ -575,6 +590,43 @@ console.log(result)
 //expected output
 [ true, "0.interest.food.1.usa.2.0.jfr" ]
 ```
+
+### ➤ makeNullSafe
+This method allow you to make an object nullsafe it means to delete all of his entries that 
+
+have null values or nullish values like {} and [] or undefined
+
+**<span style="color: orange"> Syntax : </span>**
+
+```js
+//a param have to be a key
+_Object(yourObject).makeNullSafe()
+```
+
+**<span style="color: green"> use case : </span>**
+
+
+```js
+let myObject = {
+  "mo": {"john": 8, "jane": 5, "doe": null},
+  "tu": {"john": 8, "jane": 5, "doe": null}
+  "we": {"john": 5, "jane": 9, "doe": null}
+  "th": {"john": 6, "jane": 3, "doe": null}
+  "fr": {"john": null, "jane": null, "doe": null}
+}
+_Object(myObject).makeNullSafe()
+
+console.log(myObject)
+
+//expected output
+{
+  "mo": {"john": 8, "jane": 5},
+  "tu": {"john": 8, "jane": 5}
+  "we": {"john": 5, "jane": 9}
+  "th": {"john": 6, "jane": 3}
+}
+```
+
 ___
 ## Contributing ❤
 

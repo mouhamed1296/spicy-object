@@ -1,10 +1,10 @@
 export const _Object = (_obj: Object): SpicyObject => {
     let obj: myObject = _obj
-    return {
+    return Object.freeze({
         ...obj,
         size: Object.keys(obj).length + Object.getOwnPropertySymbols(obj).length,
-        isEmpty: ():boolean => (obj && Object.keys(obj).length === 0),
-        toMap: ():Map<string,any> => {
+        isEmpty: ():boolean => (_Object(obj).size === 0),
+        toMap: (): Map<string,any> => {
             return new Map(Object.entries(obj))
         },
         getFirstEntry: (): any => (obj[Object.keys(obj)[0]]),
@@ -77,10 +77,8 @@ export const _Object = (_obj: Object): SpicyObject => {
                     if (entrie) {
                         extracted[key] = entrie
                     }
-                } else {
-                    if (obj?.[prop]) {
-                        extracted[prop] = obj[prop]
-                    }
+                } else if (obj?.[prop]) {
+                    extracted[prop] = obj[prop]
                 }
             })
             return extracted
@@ -92,7 +90,8 @@ export const _Object = (_obj: Object): SpicyObject => {
             for (const key of keys) {
                 if (Array.isArray(obj[key])) {
                     let i = 0
-                    while (i < obj[key].length) {
+                    let len = obj[key].length
+                    while (i < len) {
                         if (obj[key][i] instanceof Object) {
                             if (path === "") path += key
                             let [inc, cpath] = _Object(obj[key]).includes(prop)
@@ -107,8 +106,7 @@ export const _Object = (_obj: Object): SpicyObject => {
                     if (included) {
                         break
                     }
-                }
-                if (prop !== key && obj[key] instanceof Object && !Array.isArray(obj[key])) {
+                } else if (prop !== key && obj[key] instanceof Object && !Array.isArray(obj[key])) {
                     if (path === "") path += key
                     let [inc, cpath] = _Object(obj[key]).includes(prop)
                     included = inc 
@@ -124,16 +122,46 @@ export const _Object = (_obj: Object): SpicyObject => {
                 path = ""
             }
             return [included, path]
+        },
+        makeNullSafe: (): void => {
+            const entries = Object.entries(obj)
+            for (const entrie of entries) {
+                if (entrie[1] === null) delete obj[entrie[0]]
+                if (Array.isArray(entrie[1])) {
+                    let i = 0
+                    const len = entrie[1].length
+                    if (len === 0) {
+                        delete obj[entrie[0]]
+                    }
+                    else {
+                        while (i < len) {
+                            if (entrie[1][i] instanceof Object) {
+                                _Object(entrie[1][i]).makeNullSafe()
+                            }
+                            if (entrie[1][i] === null) {
+                                delete obj[entrie[0]][i]
+                            }
+                            i++
+                        }
+                    }
+                }
+                if (entrie[1] instanceof Object) {
+                    if (_Object(entrie[1]).isEmpty()) {
+                        delete obj[entrie[0]]
+                    } else {
+                        _Object(entrie[1]).makeNullSafe()
+                    }
+                }
+            }
         }
-    }
+    })
 }
 
 interface myObject extends Object {
     [key: string]: any
 }
-
-type SpicyObject = object & {
-    size: number
+interface SpicyObject extends Object {
+    readonly size: number
     isEmpty: Function,
     toMap: Function,
     getFirstEntry: Function,
@@ -147,6 +175,7 @@ type SpicyObject = object & {
     forEach: Function,
     freeze: Function,
     extract: Function,
-    includes: Function
+    includes: Function,
+    makeNullSafe: Function
 }
-type CallbackFunction = (value:any, key?:string, index?:number) => any;
+type CallbackFunction = (value:any, key?:string, index?:number) => void | any;
