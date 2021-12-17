@@ -2,10 +2,10 @@
   "name": "spicy_object",
   "version": "1.0.4",
   "description": "",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "tsc -p ."
+    "build": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./bin/build.ps1"
   },
   "keywords": [
     "object",
