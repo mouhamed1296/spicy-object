@@ -5,7 +5,7 @@ If you get stuck somewhere, contact us at **(mbayelel@gmail.com)** 🤙🏾
 
 ## Requirements 🎯
 
-You have to know a javascript and react and understand how forms works and programming the declarative way😉
+You have to know javascript and ES6 syntax and understand how object an arrays works in javascript😉
 
 * After this you can Fork this repo on your personal account.
 
@@ -13,7 +13,7 @@ You have to know a javascript and react and understand how forms works and progr
 
 To add a new feature to this repo, please ensure they respect the following requirements ⭐
 
-* Check first if the featureyou want to add is not already implemented.
+* Check first if the feature you want to add is not already implemented.
 
 * Ask yourself if the feature is in the scope of this repo.
 

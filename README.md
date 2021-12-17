@@ -28,6 +28,10 @@ ___
     + [➤ extract](#-extract)
     + [➤ includes](#-includes)
     + [➤ makeNullSafe](#-makeNullSafe)
+    + [➤ max](#-max)
+    + [➤ min](#-min)
+    + [➤ sum](#-sum)
+    + [➤ avg](#-avg)
   * [Contributing ❤](#contributing-)
   * [Issue Reporting](#issue-reporting)
   * [Author](#author)
@@ -627,6 +631,132 @@ console.log(myObject)
 }
 ```
 
+For min, max, sum, and avg methods we are going to use this object to ilustrate our example
+```js
+let myObject = {
+  1: {
+    firstName: "Moussa",
+    lastName: "Diop",
+    age: 23,
+    job: "Web Developer",
+    salary: 1500
+  },
+  2: {
+    firstName: "Tacko",
+    lastName: "Fall",
+    age: 21,
+    job: "App Developer",
+    salary: 1500
+  },
+  3: {
+    firstName: "Lamine",
+    lastName: "sarr",
+    age: 32,
+    job: "Manager",
+    salary: 2500
+  },
+  4: {
+    firstName: "Awa",
+    lastName: "sarr",
+    age: 24,
+    job: "IT Engineer",
+    salary: 2000
+  }
+}
+```
+### ➤ max
+This method allow you to get the maximum value based on a key inside the object
+
+This method apply for objects that contains other object of same structure one another
+
+**<span style="color: orange"> Syntax : </span>**
+
+```js
+//a param have to be a key
+_Object(yourObject).max(key)
+```
+
+**<span style="color: green"> use case : </span>**
+
+```js
+
+const maxAge = _Object(myObject).max("age")
+
+console.log(maxAge)
+
+//expected output
+32
+```
+### ➤ min
+This method allow you to get the minimum value based on a key inside the object
+
+This method apply for objects that contains other object of same structure one another
+
+**<span style="color: orange"> Syntax : </span>**
+
+```js
+//a param have to be a key
+_Object(yourObject).min(key)
+```
+
+**<span style="color: green"> use case : </span>**
+
+```js
+
+const minAge = _Object(myObject).min("age")
+
+console.log(minAge)
+
+//expected output
+21
+```
+### ➤ sum
+This method allow you to get the sum of values based on a key inside the object
+
+This method apply for objects that contains other object of same structure one another
+
+**<span style="color: orange"> Syntax : </span>**
+
+```js
+//a param have to be a key
+_Object(yourObject).sum(key)
+```
+
+**<span style="color: green"> use case : </span>**
+
+```js
+
+const totalSalary = _Object(myObject).sum("salary")
+
+console.log(totalSalary)
+
+//expected output
+7500
+```
+
+### ➤ avg
+This method allow you to get the average value based on a key inside the object
+
+This method apply for objects that contains other object of same structure one another
+
+**<span style="color: orange"> Syntax : </span>**
+
+```js
+//a param have to be a key
+_Object(yourObject).avg(key)
+```
+
+**<span style="color: green"> use case : </span>**
+
+```js
+
+const averageSalary = _Object(myObject).avg("salary")
+
+console.log(averageSalary)
+
+//expected output
+1875
+```
 ___
 ## Contributing ❤
 
