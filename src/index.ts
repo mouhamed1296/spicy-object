@@ -21,21 +21,17 @@ export const _Object = (_obj: Object): SpicyObject => {
          * @returns any
          */
         getLastEntry: (): any => {
-            let keys = Object.keys(obj)
+            const keys = Object.keys(obj)
             return obj[keys[keys.length - 1]]
         },
-        /**
-         * @param  {number} index
-         * @returns any
-         */
-        getEntryByIndex: (index: number): any => (obj[Object.keys(obj)[index]]),
         /**
          * @param  {string} key
          * @returns any
          */
-        getEntryByKey: (key: string): any => (_Object(obj).getEntryByPath(
-            _Object(obj).includes(key)[1]
-        )),
+        getEntryByKey: (key: string): any => {
+            const _obj = _Object(obj)
+            return _obj.getEntryByPath(_obj.includes(key)[1])
+        },
         /**
          * @param  {string} path
          * @returns any
@@ -49,18 +45,6 @@ export const _Object = (_obj: Object): SpicyObject => {
                 i++
             }
             return holder
-        },
-        /**
-         * @param  {number} startIndex
-         * @param  {number} stopIndex
-         * @returns Object
-         */
-        slice: (startIndex: number, stopIndex: number): Object => {
-            return Object.fromEntries(
-                Object.keys(obj).slice(startIndex, stopIndex).map(
-                    key => [key, obj[key]]
-                )
-            )
         },
         /**
          * @param  {CallbackFunction} filter_func
@@ -284,10 +268,8 @@ interface SpicyObject extends Object {
     toMap: Function,
     getFirstEntry: Function,
     getLastEntry: Function,
-    getEntryByIndex: Function,
     getEntryByKey: Function,
     getEntryByPath: Function,
-    slice: Function,
     filter: Function,
     map: Function,
     forEach: Function,
