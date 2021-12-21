@@ -1,5 +1,6 @@
 # spicy_object :heart: :boom: :rocket:
 A JS/TS Library that allow developers to easily manipulate javascript object by providing a bunch of useful method that will make working with object as simple as working with arrays.
+
 [![mouhamed1296 - spicy_object](https://img.shields.io/static/v1?label=mouhamed1296&message=spicy-object&color=blue&logo=github)](https://github.com/mouhamed1296/spicy-object "Go to GitHub repo")
 [![stars - spicy_object](https://img.shields.io/github/stars/mouhamed1296/spicy-object?style=social)](https://github.com/mouhamed1296/spicy-object)
 
@@ -17,10 +18,8 @@ ___
     + [➤ ToMap](#-toMap)
     + [➤ getFirstEntry](#-getFirstEntry)
     + [➤ getLastEntry](#-getLastEntry)
-    + [➤ getEntryByIndex](#-getEntryByIndex)
     + [➤ getEntryByKey](#-getEntryByKey)
     + [➤ getEntryByPath](#-getEnryByPath)
-    + [➤ slice](#-slice)
     + [➤ filter](#-filter)
     + [➤ map](#-map)
     + [➤ forEach](#-forEach)
@@ -32,6 +31,7 @@ ___
     + [➤ min](#-min)
     + [➤ sum](#-sum)
     + [➤ avg](#-avg)
+    + [➤ equals](#-equals)
   * [Contributing ❤](#contributing-)
   * [Issue Reporting](#issue-reporting)
   * [Author](#author)
@@ -259,52 +259,6 @@ console.log(lastEntry)
     sports: ["football", "basketball"]
 } 
 ```
-### ➤ getEntryByIndex
-This method allow you get an entry by only knowing his position inside the object.
-
-It takes one parameter: a number that represents the index of the entry you are looking for.
-
-**<span style="color: orange"> Syntax : </span>**
-
-```js
-_Object(yourObject).getEntryByIndex(index)
-```
-You can think this is useless but let's say that you want to loop through your object with the while loop like you do with arrays this method wiil be very useful.
-
-**<span style="color: green"> use case : </span>**
-
-```js
-const myArray = ["sarr", "mouhamed", 20, "Developper"]
-const myObject = {
-    lastname: "sarr",
-    firstname: "mouhamed",
-    age: 20,
-    job: "Developer"
-}
-
-//Loop through array
-let i = 0
-while (i < myArray.length) {
-    //do stuff with values
-    console.log(myArray[i])
-    i++
-}
-
-//Loop though object
-let _myObject = _Object(myObject)
-let i = 0
-while (i < _myObject.size) {
-    //do stuff with values
-    console.log(_myObject.getEntryByIndex(i))
-    i++
-}
-
-//expected output for both  loops
-"sarr"
-"mouhamed"
-20
-"Developer"
-```
 ### ➤ getEntryByKey
 This method allow you to get the value of an deeply nested entry inside an object by only passing his key as parameter.
 
@@ -357,31 +311,6 @@ let result = _Object(users).getEntryByPath("0.interest.food.1.usa.2.0.jfr")
 //expected output for both method
 [ "jfr_sn", "jfr_ng" ]
 ```
-### ➤ slice
-This method allow you to get one slice of an object by passing in parameter the slice start index and stop index
-
-
-**<span style="color: orange"> Syntax : </span>**
-
-```js
-_Object(yourObject).slice(startIndex, stopIndex)
-```
-
-**<span style="color: green"> use case : </span>**
-
-```js
-let slice = _Object(userInfo).slice(0, 3)
-console.log(slice)
-
-//expected output
-{ 
-    name: "John",
-    age: 30,
-    car: null,
-    job: "Developer"
-}
-```
-
 ### ➤ filter
 This method allow you to filter an object by passing a filter function that returns a boolean. 
 
@@ -756,6 +685,87 @@ console.log(averageSalary)
 
 //expected output
 1875
+```
+
+### ➤ equals
+This method allow you to compare to objects by values or by keys.
+
+The default is comparison by values (if you don't pass a second parameter to this method).
+
+You can also compare object by keys to test if they have the same structure 
+
+(but this comparison just apply to the first-level keys of these two objects)
+
+**<span style="color: orange"> Syntax : </span>**
+
+```js
+_Object(yourObject).equals(ObjectToCompareTo, by="values")
+```
+
+**<span style="color: green"> use case : </span>**
+
+```js
+const myObject1 = {
+    1: {
+      firstName: "Moussa",
+      lastName: "Diop",
+      age: 23,
+      job: "Web Developer",
+      salary: 1500,
+      music: ["rap", "rnb", {drill: ["uk", "usa", "sn"]}]
+    },
+    2: {
+      firstName: "Tacko",
+      lastName: "Fall",
+      age: 21,
+      job: "App Developer",
+      salary: 1500
+    }
+  }
+const myObject3 = {
+    1: {
+      firstName: "Moussa",
+      lastName: "Diop",
+      age: 23,
+      job: "Web Developer",
+      salary: 1500,
+      music: ["rap", "rnb", {drill: ["uk", "usa", "sn"]}]
+    },
+    2: {
+      firstName: "Tacko",
+      lastName: "Fall",
+      age: 21,
+      job: "App Developer",
+      salary: 1500
+    }
+  }
+const myObject2 = {
+    1: {
+      firstName: "Lamine",
+      lastName: "sarr",
+      age: 32,
+      job: "Manager",
+      salary: 2500
+    },
+    2: {
+      firstName: "Awa",
+      lastName: "sarr",
+      age: 24,
+      job: "IT Engineer",
+      salary: 2000
+    }
+}
+
+console.log(_Object(myObject1).equals(myObject2)) 
+
+// expected output
+false
+
+console.log(_Object(myObject1).equals(myObject3))
+
+// expected output
+true
+
 ```
 ___
 ## Contributing ❤
