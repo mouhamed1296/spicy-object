@@ -255,6 +255,41 @@ export const _Object = (_obj: Object): SpicyObject => {
             })
             const avg = _Object(obj).sum(key) / myArray.length
             return avg
+        },
+        equals: (o: myObject, by: "keys" | "values" = "values") => {
+            const entries1 = Object.entries(obj)
+            const entries2 = Object.entries(o)
+            if (_Object(obj).size !== _Object(o).size) return false
+            let  i = _Object(obj).size
+            if (by === "values") {
+                while (i--) {
+                    //if value is an array
+                    if (Array.isArray(entries1[i][1]) && Array.isArray(entries2[i][1])
+                    && (entries1[i][1].length === entries2[i][1].length)) {
+                        let j = entries1[i][1].length
+                        while (j--) {
+                            if (entries1[i][1][j] instanceof Object && entries2[i][1][j] instanceof Object) {
+                                if (!_Object(entries1[i][1][j]).equals(entries2[i][1][j])) return false
+                                continue
+                            }
+                            if (entries1[i][1][j] !== entries2[i][1][j]) return false
+                        }
+                        continue
+                    }
+                    // if value is an object
+                    if (entries1[i][1] instanceof Object && entries2[i][1] instanceof Object) {
+                        if (!_Object(entries1[i][1]).equals(entries2[i][1])) return false
+                        continue
+                    }
+                    if (entries1[i][1] !== entries2[i][1]) return false
+                }
+            }
+            if (by === "keys") {
+                while (i--) {
+                    if (entries1[i][0] !== entries2[i][0]) return false
+                }
+            }
+            return true
         }
     }
 }
@@ -280,6 +315,7 @@ interface SpicyObject extends Object {
     max: Function,
     min: Function,
     sum: Function,
-    avg: Function
+    avg: Function,
+    equals: Function
 }
 type CallbackFunction = (value:any, key?:string, index?:number) => void | any;
