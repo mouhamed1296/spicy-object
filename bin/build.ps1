@@ -4,4 +4,4 @@ Remove-Item -Path ./lib/index.js
 Move-Item -Path ./lib/index.min.js -Destination ./lib/index.js
 git add .
 git commit
-git push origin master
+git push origin v2
