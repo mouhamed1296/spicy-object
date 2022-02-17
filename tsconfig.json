@@ -7,7 +7,6 @@
       "declaration": true,
       "declarationMap": true,
       "rootDir": "./src",
-      "lib": ["ES2020"],
       "outDir": "./lib",
       "alwaysStrict": true,
       "forceConsistentCasingInFileNames": true,
@@ -19,5 +18,7 @@
       "noImplicitThis": true, 
       "strictNullChecks": true,
       "noEmitOnError": true
-    }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
 }
