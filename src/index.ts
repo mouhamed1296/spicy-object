@@ -1,321 +1,98 @@
-export const _Object = (_obj: Object): SpicyObject => {
-    let obj: myObject = _obj
+import * as utils from './utils'
+import * as accessors from './accessors'
+import * as math from './math'
+import { SpicyObject, _object } from 'global'
+import { CallbackFunction } from 'callbacks'
+
+const _Object = (obj: _object): SpicyObject => {
     return {
         ...obj,
-        size: Object.keys(obj).length + Object.getOwnPropertySymbols(obj).length,
+        size: accessors.getSize(obj),
         /**
          * @returns boolean
          */
-        isEmpty: ():boolean => (_Object(obj).size === 0),
+        isEmpty: (): boolean => utils.isEmpty(obj),
         /**
          * @returns Map
          */
-        toMap: (): Map<string,any> => {
-            return new Map(Object.entries(obj))
-        },
+        toMap: (): Map<string,any> => utils.toMap(obj),
         /**
          * @returns any
          */
-        getFirstEntry: (): any => (obj[Object.keys(obj)[0]]),
+        getFirstEntry: (): any => accessors.getFirstEntry(obj),
         /**
          * @returns any
          */
-        getLastEntry: (): any => {
-            const keys = Object.keys(obj)
-            return obj[keys[keys.length - 1]]
-        },
+        getLastEntry: (): any => accessors.getLastEntry(obj),
         /**
          * @param  {string} key
          * @returns any
          */
-        getEntryByKey: (key: string): any => {
-            const _obj = _Object(obj)
-            return _obj.getEntryByPath(_obj.includes(key)[1])
-        },
+        getEntryByKey: (key: string): any => accessors.getEntryByKey(obj, key),
         /**
          * @param  {string} path
          * @returns any
          */
-        getEntryByPath: (path: string): any => {
-            const pathComponents = path.split(".")
-            const nestLevel = pathComponents.length
-            let i = 0, holder = obj
-            while (i < nestLevel) {
-                holder = holder?.[pathComponents[i]]
-                i++
-            }
-            return holder
-        },
+        getEntryByPath: (path: string): any => accessors.getEntryByPath(obj, path),
         /**
-         * @param  {CallbackFunction} filter_func
+         * @param  {CallbackFunction} fn
          * @returns Object
          */
-        filter: (filter_func: CallbackFunction): Object => {
-            return Object.fromEntries(
-                Object.entries(obj).filter(([key, value], index) => filter_func(value, key, index))
-            )
-        },
+        filter: (fn: CallbackFunction): _object => utils.filter(obj, fn),
         /**
-         * @param  {CallbackFunction} map_func
+         * @param  {CallbackFunction} fn
          * @returns Object
          */
-        map: (map_func: CallbackFunction): Object => { 
-            return Object.fromEntries(
-                Object.entries(obj).map(
-                    ([key, value], index) => [key, map_func(value, key, index)]
-                )
-            )
-        },
+        map: (fn: CallbackFunction): _object => utils.map(obj, fn),
         /**
          * @param  {CallbackFunction} fn
          * @returns void
          */
-        forEach: (fn: CallbackFunction): void => {
-            Object.entries(obj).forEach(([key, value], index) => {
-                fn(value, key, index)
-            })
-        },
+        forEach: (fn: CallbackFunction): void => utils.foreach(obj, fn),
         /**
          * @param  {number=0} nestLevel
          * @returns Object
          */
-        freeze: (nestLevel: number = 0): Object => {
-            if (nestLevel >= 1) {
-                const keys: string[] = Object.keys(obj)
-                for (const key of keys) {
-                    if (obj[key] instanceof Object) {
-                        _Object(obj[key]).freeze(nestLevel - 1)
-                    }
-                }
-            }
-            return Object.freeze(obj)
-        },
+        freeze: (nestLevel: number = 0): Readonly<_object> => utils.freeze(obj, nestLevel),
         /**
          * @param  {string[]} ...props
          * @returns Object
          */
-        extract: (...props: string[]): Object => {
-            let extracted: myObject = {}
-            props.forEach(prop => {
-                if (prop.includes(".")) {
-                    let key = prop
-                    const alias = prop.match(/^[a-z0-9_.]+as{1}\({1}([a-z0-9_]+)\){1}$/i)?.[1]
-                    if (alias) {
-                        prop = prop.replace(`.as(${alias})`, "")
-                        key = alias
-                    }
-                    const entrie = _Object(obj).getEntryByPath(prop)
-                    if (entrie) {
-                        extracted[key] = entrie
-                    }
-                } else if (obj?.[prop]) {
-                    extracted[prop] = obj[prop]
-                }
-            })
-            return extracted
-        },
+        extract: (...props: string[]): _object => utils.extract(obj, ...props),
         /**
          * @param  {string} prop
          * @returns any
          */
-        includes: (prop: string):any => {
-            const keys = Object.keys(obj)
-            let included = false
-            let path = ""
-            for (const key of keys) {
-                if (Array.isArray(obj[key])) {
-                    let i = 0
-                    let len = obj[key].length
-                    while (i < len) {
-                        if (obj[key][i] instanceof Object) {
-                            if (path === "") path += key
-                            let [inc, cpath] = _Object(obj[key]).includes(prop)
-                            included = inc 
-                            if (included) {
-                                path += `.${cpath}`
-                                break
-                            }
-                        }
-                        i++
-                    }
-                    if (included) {
-                        break
-                    }
-                } else if (prop !== key && obj[key] instanceof Object && !Array.isArray(obj[key])) {
-                    if (path === "") path += key
-                    let [inc, cpath] = _Object(obj[key]).includes(prop)
-                    included = inc 
-                    if (included) {
-                        path += `.${cpath}`
-                        break
-                    }
-                } else if (prop === key) {
-                    path += key
-                    included = true
-                    break
-                }
-                path = ""
-            }
-            return [included, path]
-        },
+        includes: (prop: string):[boolean, string] => utils.includes(obj, prop),
         /**
          * @returns void
          */
-        makeNullSafe: (): void => {
-            const entries = Object.entries(obj)
-            for (const entrie of entries) {
-                if (entrie[1] === null || entrie[1] === undefined) delete obj[entrie[0]]
-                if (Array.isArray(entrie[1])) {
-                    let i = 0
-                    const len = entrie[1].length
-                    if (len === 0) {
-                        delete obj[entrie[0]]
-                    }
-                    else {
-                        while (i < len) {
-                            if (entrie[1][i] instanceof Object) {
-                                _Object(entrie[1][i]).makeNullSafe()
-                            }
-                            if (entrie[1][i] === null || entrie[1][i] === undefined) {
-                                obj[entrie[0]] = obj[entrie[0]].filter((item: any) => item)
-                            }
-                            i++
-                        }
-                    }
-                }
-                if (entrie[1] instanceof Object) {
-                    if (_Object(entrie[1]).isEmpty()) {
-                        delete obj[entrie[0]]
-                    } else {
-                        _Object(entrie[1]).makeNullSafe()
-                        if (_Object(entrie[1]).isEmpty()) delete obj[entrie[0]]
-                    }
-                }
-            }
-        },
+        makeNullSafe: (): void => utils.makeNullSafe(obj),
         /**
          * @param  {string} key
          * @returns number
          */
-        max: (key: string): number => {
-            if (!_Object(obj).includes(key)) return 0
-            let maxArray: Array<number> = []
-            _Object(obj).forEach((el: myObject) => {
-                if (_Object(obj).includes(key)) maxArray.push(el[key])
-            })
-            let i = 0
-            let len = maxArray.length
-            let max = maxArray[i]
-            while(i < len) {
-                if (maxArray[i] > max) max = maxArray[i]
-                i++
-            }
-            return max
-        },
+        max: (key: string): number => math.max(obj, key),
         /**
          * @param  {string} key
          * @returns number
          */
-        min: (key: string): number => {
-            if (!_Object(obj).includes(key)) return 0
-            let minArray: Array<number> = []
-            _Object(obj).forEach((el: myObject) => {
-                if (_Object(obj).includes(key)) minArray.push(el[key])
-            })
-            let i = 0
-            let len = minArray.length
-            let min = minArray[i]
-            while(i < len) {
-                if (minArray[i] < min) min = minArray[i]
-                i++
-            }
-            return min
-        },
+        min: (key: string): number => math.min(obj, key),
         /**
          * @param  {string} key
          * @returns number
          */
-        sum: (key: string): number => {
-            if (!_Object(obj).includes(key)) return 0
-            let sum: number = 0
-            _Object(obj).forEach((el: myObject) => {
-                if (_Object(obj).includes(key)) sum += el[key]
-            })
-            return sum
-        },
+        sum: (key: string): number => math.sum(obj, key),
         /**
          * @param  {string} key
          * @returns number
          */
-        avg: (key: string): number => {
-            if (!_Object(obj).includes(key)) return 0
-            let myArray: Array<number> = []
-            _Object(obj).forEach((el: myObject) => {
-                if (_Object(obj).includes(key)) myArray.push(el[key])
-            })
-            const avg = _Object(obj).sum(key) / myArray.length
-            return avg
-        },
-        equals: (o: myObject, by: "keys" | "values" = "values") => {
-            const entries1 = Object.entries(obj)
-            const entries2 = Object.entries(o)
-            if (_Object(obj).size !== _Object(o).size) return false
-            let  i = _Object(obj).size
-            if (by === "values") {
-                while (i--) {
-                    //if value is an array
-                    if (Array.isArray(entries1[i][1]) && Array.isArray(entries2[i][1])
-                    && (entries1[i][1].length === entries2[i][1].length)) {
-                        let j = entries1[i][1].length
-                        while (j--) {
-                            if (entries1[i][1][j] instanceof Object && entries2[i][1][j] instanceof Object) {
-                                if (!_Object(entries1[i][1][j]).equals(entries2[i][1][j])) return false
-                                continue
-                            }
-                            if (entries1[i][1][j] !== entries2[i][1][j]) return false
-                        }
-                        continue
-                    }
-                    // if value is an object
-                    if (entries1[i][1] instanceof Object && entries2[i][1] instanceof Object) {
-                        if (!_Object(entries1[i][1]).equals(entries2[i][1])) return false
-                        continue
-                    }
-                    if (entries1[i][1] !== entries2[i][1]) return false
-                }
-            }
-            if (by === "keys") {
-                while (i--) {
-                    if (entries1[i][0] !== entries2[i][0]) return false
-                }
-            }
-            return true
-        }
+        avg: (key: string): number => math.avg(obj, key),
+        equals: (o1: _object, o2: _object): boolean => utils.equals(o1, o2)
     }
 }
 
-interface myObject extends Object {
-    [key: string]: any
-}
-interface SpicyObject extends Object {
-    readonly size: number
-    isEmpty: Function,
-    toMap: Function,
-    getFirstEntry: Function,
-    getLastEntry: Function,
-    getEntryByKey: Function,
-    getEntryByPath: Function,
-    filter: Function,
-    map: Function,
-    forEach: Function,
-    freeze: Function,
-    extract: Function,
-    includes: Function,
-    makeNullSafe: Function,
-    max: Function,
-    min: Function,
-    sum: Function,
-    avg: Function,
-    equals: Function
-}
-type CallbackFunction = (value:any, key?:string, index?:number) => void | any;
+export default _Object
+export * from './utils'
+export * from './accessors'
+export * from './math'
